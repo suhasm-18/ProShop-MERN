@@ -9,3 +9,17 @@ import userRoutes from './routes/userRouters.js';
 const port = process.env.PORT || 8000;
 
 connectDB();
+
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send("API is runing");
+});
+
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(port, () =>console.log(`Server running on port ${port}`));

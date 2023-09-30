@@ -108,3 +108,12 @@ const getOrders = asyncHandler(async (req, res) => {
   res.send(" Get all orders");
 });
 
+export {
+  addOrderItems,
+  getMyOrders,
+  getOrderById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+  getOrders,
+};
+

@@ -41,7 +41,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
 const getMyOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
-  res.ststus(200).json(orders);
+  res.status(200).json(orders);
 });
 
 // @desc    Get order by ID
@@ -68,19 +68,10 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
-
-});
-
-// @desc    Update order to delivered
-// @route   PUT /api/orders/:id/deliver
-// @access  Private/Admin
-
-const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  res.send("Update order to delivered");
   if (order) {
-    // check the correct amount was paid
-    const paidCorrectAmount = order.totalPrice.toString() === value;
-    if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
+    // // check the correct amount was paid
+    // const paidCorrectAmount = order.totalPrice.toString() === value;
+    // if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
 
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -99,21 +90,16 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   }
 });
 
-
-// @desc    Get all orders
-// @route   GET /api/orders
+// @desc    Update order to delivered
+// @route   PUT /api/orders/:id/deliver
 // @access  Private/Admin
 
-const getOrders = asyncHandler(async (req, res) => {
-  res.send(" Get all orders");
-});
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
 
-export {
-  addOrderItems,
-  getMyOrders,
-  getOrderById,
-  updateOrderToPaid,
-  updateOrderToDelivered,
-  getOrders,
-};
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
 

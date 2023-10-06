@@ -8,16 +8,10 @@ const notFound = (req, res, next) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     let message = err.message;
   
-    // NOTE: checking for invalid ObjectId moved to it's own middleware
-    // See README for further info.
-  if(err.name ==='CastError' && err.kind ==='ObjectId'){
-        message = 'Resource not found';
-        statusCode = 404;
-  }
 
   res.status(statusCode).json({
     message,
-    stack: process.env.NODE_ENV === 'production' ? 'pp ' :  err.stack,
+    stack: process.env.NODE_ENV === 'production' ? ' ' :  err.stack,
   });
 };
   export { notFound, errorHandler };

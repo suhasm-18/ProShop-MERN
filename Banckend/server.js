@@ -52,6 +52,12 @@ if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
   app.get('/', (req, res) => {
+
+      
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(port, () =>console.log(`Server running on port ${port}`));
     res.send('API is running....');
   });
 }
